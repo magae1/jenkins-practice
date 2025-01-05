@@ -1,0 +1,7 @@
+name: jenkins-controller
+
+services:
+  controller:
+    image: jenkins/jenkins:lts-jdk17
+    ports:
+      - "33853:8080"

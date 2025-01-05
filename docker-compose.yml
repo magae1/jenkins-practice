@@ -1,0 +1,7 @@
+name: jenkins-spring
+
+services:
+  server:
+    build: .
+    ports:
+      - "80:8080"

@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+  stages {
+    stage("Checkout") {
+      steps {
+        git url: 'https://github.com/{}/{}',
+        branch: 'main',
+        credentialsId: '{}'
+      }
+    }
+    stage("Clean") {
+      steps {
+        sh './gradlew clean'
+      }
+    }
+    stage("Compile") {
+      steps {
+        sh './gradlew compileJava'
+      }
+    }
+    stage("Unit test") {
+      steps {
+        sh './gradlew test'
+      }
+    }
+    stage("Build") {
+      steps {
+        sh './gradlew build'
+      }
+    }
+    stage("Stop existing services") {
+      steps {
+        sh 'docker compose down'
+      }
+    }
+    stage("Run docker compose services") {
+      steps {
+        sh 'docker compose up -d'
+      }
+    }
+  }
+}
